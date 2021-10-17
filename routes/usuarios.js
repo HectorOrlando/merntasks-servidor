@@ -1,0 +1,19 @@
+// Rutas para crear usuario
+const express = require('express')
+const router = express.Router()
+const usuarioController = require('../controllers/usuarioController')
+const {check} = require('express-validator')
+
+// Crear un usuario
+// api/usuarios   Middleware
+router.post('/', 
+    // reglas de expres-validator para validar los campos
+    [
+        check('nombre', 'El nombre es obligatorio').not().isEmpty(),  // revisa que no este vacio.
+        check('email', 'Agrega un email valido').isEmail(),
+        check('password', 'El password debe ser mínimo de 6 caracteres').isLength({min:6})
+    ],
+    usuarioController.crearUsuario
+)
+
+module.exports = router
